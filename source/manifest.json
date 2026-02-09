@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Fanblocker - Fandom Disruptions Blocker",
+  "version": "1.0",
+  "description": "Get rid of the annoying Fandom disruptions.",
+  "icons": {
+    "48": "icon.png"
+  },
+  
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Fanblocker",
+    "default_popup": "popup/popup.html"
+  },
+  
+  "content_scripts": [{
+    "matches": ["*://*.fandom.com/*"],
+    "js": ["content.js"]
+  }]
+} 
