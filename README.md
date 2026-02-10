@@ -11,9 +11,11 @@ Fanblocker **does not** remove advertisements. For this I recommend [uBlock Orig
 
 ## Install
 
-1. Open the [Fanblocker Mozilla Addons](https://addons.mozilla.org/en-US/firefox/addon/fanblocker/)
+[![INSTALL](https://blog.mozilla.org/addons/files/2015/11/get-the-addon-small.png)](https://addons.mozilla.org/en-US/firefox/addon/fanblocker/)
+
+1. Get the addon (via the button above), or at https://addons.mozilla.org/en-US/firefox/addon/fanblocker/
 2. Hit the **Add to Firefox** button on the top-right corner of the page.
-3. Hit install on your web browser and it's installed!
+3. Confirm installation on your web browser and it's installed!
 
 Thank you for using Fanblocker.
 
