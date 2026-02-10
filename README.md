@@ -2,7 +2,7 @@
 
 # Fanblocker - Fandom Disruption Blocker
 
-Fanblocker is a fan-made [Firefox](https://firefox.com) extension that removes the header, sidebar, and side rail of a [Fandom](https://fandom.com)'s wiki allowing a smooth reading experience.
+Fanblocker is an open-source fan-made extension for [Firefox](https://firefox.com) that removes the header, sidebar, and side rail of a [Fandom](https://fandom.com) Wiki page in real time, providing a smooth reading experience without the previous distractions that annoy many users to this date.
 
 Fanblocker **does not** remove advertisements. For this I recommend [uBlock Origin for Firefox](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) made by [Raymond Hill](https://github.com/gorhill).
 
