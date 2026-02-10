@@ -1,25 +1,34 @@
 {
-  "manifest_version": 2,
-  "name": "Fanblocker - Fandom Disruptions Blocker",
-  "version": "1.0",
-  "description": "Get rid of the annoying Fandom disruptions.",
-  "icons": {
-    "48": "icon.png"
-  },
-  
-  "permissions": [
-    "tabs",
-    "storage"
-  ],
-  
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_title": "Fanblocker",
-    "default_popup": "popup/popup.html"
-  },
-  
-  "content_scripts": [{
-    "matches": ["*://*.fandom.com/*"],
-    "js": ["content.js"]
-  }]
-} 
+    "manifest_version": 2,
+    "name": "Fanblocker - Fandom Disruptions Blocker",
+    "version": "0.1.1",
+    "description": "Get rid of the annoying Fandom disruptions.",
+    "icons": {
+        "48": "icon48.png",
+        "96": "icon96.png",
+        "128": "icon128.png"
+    },
+
+    "permissions": ["activeTab", "storage"],
+
+    "browser_specific_settings": {
+        "gecko": {
+            "data_collection_permissions": {
+                "required": ["none"]
+            }
+        }
+    },
+
+    "browser_action": {
+        "default_icon": "icon48.png",
+        "default_title": "Fanblocker",
+        "default_popup": "popup/popup.html"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://*.fandom.com/*"],
+            "js": ["content.js"]
+        }
+    ]
+}

@@ -1,4 +1,4 @@
-![ICON](./source/icon.png)
+![ICON](./source/icon96.png)
 
 # Fanblocker - Fandom Disruption Blocker
 
@@ -6,7 +6,14 @@ Fanblocker is a fan-made [Firefox](https://firefox.com) extension that removes t
 
 Fanblocker **does not** remove advertisements. For this I recommend [uBlock Origin for Firefox](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) made by [Raymond Hill](https://github.com/gorhill).
 
-## Install
+## Preview
+
+[The Backwards House](https://backwardshouse.fandom.com) wiki **before** enabling Fanblocker.
+![PREVIEW1](preview-2.png)
+[The Backwards House](https://backwardshouse.fandom.com) wiki **after** enabling Fanblocker.
+![PREVIEW1](preview-1.png)
+
+Preview use the [Fandom](https://fandom.com) wiki of [The Backwards House](https://backwardshouse.fandom.com).
 
 ## Contributions
 
