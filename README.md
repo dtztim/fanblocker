@@ -9,7 +9,7 @@ Fanblocker is an open-source fan-made extension for [Firefox](https://firefox.co
 
 Fanblocker **does not** remove advertisements. For this I recommend [uBlock Origin for Firefox](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/) made by [Raymond Hill](https://github.com/gorhill).
 
-## Install
+## Get the add-on
 
 [![INSTALL](https://blog.mozilla.org/addons/files/2015/11/get-the-addon-small.png)](https://addons.mozilla.org/en-US/firefox/addon/fanblocker/)
 
@@ -21,12 +21,12 @@ Thank you for using Fanblocker.
 
 ## Preview
 
-[The Backwards House](https://backwardshouse.fandom.com) wiki **before** enabling Fanblocker.
+**Before** enabling Fanblocker.
 ![PREVIEW1](preview-2.png)
-[The Backwards House](https://backwardshouse.fandom.com) wiki **after** enabling Fanblocker.
+**After** enabling Fanblocker.
 ![PREVIEW1](preview-1.png)
 
-Preview use the [Fandom](https://fandom.com) wiki of [The Backwards House](https://backwardshouse.fandom.com).
+Preview use the [Fandom](https://fandom.com) wiki of [The Backwards House](https://backwardshouse.fandom.com) only for previsualization purposes.
 
 ## Contributions
 
@@ -36,7 +36,7 @@ If you find any bug and cannot help fix it, feel free to [submit an issue](./iss
 
 ## License
 
-*Licensed under [MIT](https://opensource.org/license/mit).*
+*Licensed under [MIT](https://opensource.org/license/mit) because it needed a license :<*
 
 Feel free to contribute, fork, do anything you want with it!
 
