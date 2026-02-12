@@ -3,7 +3,7 @@
 # Fanblocker - Fandom Disruption Blocker
 
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/%7B6dbb218e-c448-41f6-9145-89504cd2c539%7D)]()
-[![Static Badge](https://img.shields.io/badge/AMO_status-validation_pending-yellow)]()
+[![Static Badge](https://img.shields.io/badge/AMO_status-published-green)]()
 
 Fanblocker is an open-source fan-made extension for [Firefox](https://firefox.com) that removes the header, sidebar, and side rail of a [Fandom](https://fandom.com) Wiki page in real time, providing a smooth reading experience without the previous distractions that annoy many users to this date.
 
