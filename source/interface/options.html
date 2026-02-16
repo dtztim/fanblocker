@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Fanblocker Configuration</title>
+
+    <link rel="stylesheet" href="options.css">
+    <link rel="icon" href="../assets/icons/icon48.png">
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body class="options-page">
+    <main>
+      <header class="header">
+        <a href="https://github.com/purxyl/fanblocker" class="logo" title="Open repository">
+          <img src="../assets/icons/icon64.png" alt="Fanblocker Icon">
+        </a>
+        <nav class="nav">
+          <a class="nav-item" href="https://github.com/dtztim/fanblocker/issues" title="Submit a feedback">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M500-520v-280H160v525l46-45h594v-480H700v280l-100-60-100 60ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm80-720v480-480Z"/></svg>
+          </a>
+        </nav>
+      </header>
+      <section class="content">
+        <div class="preview">
+          <div class="preview-item">
+            <div class="preview-item-header">Header</div>
+            <div class="preview-item-sidebar">Sidebar</div>
+            <div class="preview-item-rail">Rail</div>
+            <div class="preview-item-content">Content</div>
+            <div class="preview-item-footer">Footer</div>
+          </div>
+        </div>
+        <div class="options">
+          <div class="option switch">
+            <label for="partHeader">Hide Header</label>
+            <input type="checkbox" name="partHeader" id="partHeader">
+          </div>
+          <div class="option switch">
+            <label for="partSidebar">Hide Sidebar</label>
+            <input type="checkbox" name="partSidebar" id="partSidebar">
+          </div>
+          <div class="option switch">
+            <label for="partRail">Hide Rail</label>
+            <input type="checkbox" name="partRail" id="partRail">
+          </div>
+          <div class="option switch">
+            <label for="partFooter">Hide Footer</label>
+            <input type="checkbox" name="partFooter" id="partFooter">
+          </div>
+          <div class="option switch" title="Panoramic View only works when all elements are hidden.">
+            <label for="panoramicFB">Panoramic View</label>
+            <input type="checkbox" name="panoramicFB" id="panoramicFB">
+          </div>
+          <div class="option button">
+            <button id="enableFB">Enable</button>
+          </div>
+        </div>
+        <div class="dev-panel">
+          <div class="dev-title">Developer</div>
+          <p class="dev-note">Toggle individual selectors for troubleshooting or custom layouts.</p>
+          <div class="dev-list" id="selectorList"></div>
+        </div>
+      </section>
+      <footer class="footer">
+        <p class="version">
+          Version: <span id="versionFB">N/A</span> — <a href="https://github.com/purxyl/fanblocker/releases" target="_blank">Read the changelog</a>
+        </p>
+        <p class="notice">
+          Made with &hearts; by <a href="https://purxyl.bsky.social" target="_blank">Purxyl</a>
+        </p>
+      </footer>
+    </main>
+  </body>
+  <script src="options.js"></script>
+</html>

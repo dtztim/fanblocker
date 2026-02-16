@@ -1,121 +1,338 @@
-const DEFAULT_ENABLED = true;
-const SELECTORS = {
-  sidebar: 'global-explore-navigation',
-  header: 'global-top-navigation',
-  mainContent: '.main-container',
-  banner: '.fandom-community-header__background',
-  rightRail: '.page__right-rail',
-  footer: '.global-footer',
+const DEFAULT_PARTS = {
+	header: true,
+	sidebar: true,
+	rail: true,
+	footer: false,
 };
 
-let isEnabled = null;
-let hasStarted = false;
+const SELECTOR_CATALOG = [
+	{
+		id: "global-top-navigation",
+		label: "Global Top Navigation",
+		selector: "#global-top-navigation",
+		category: "header",
+	},
+	{
+		id: "global-navigation",
+		label: "Global Navigation",
+		selector: "#global-navigation",
+		category: "header",
+	},
+	{
+		id: "global-navigation-class",
+		label: "Global Navigation (class)",
+		selector: ".global-navigation",
+		category: "header",
+	},
+	{
+		id: "global-navigation-container",
+		label: "Global Navigation Container",
+		selector: ".global-navigation__container",
+		category: "header",
+	},
+	{
+		id: "global-navigation-content",
+		label: "Global Navigation Content",
+		selector: ".global-navigation__content",
+		category: "header",
+	},
+	{
+		id: "fandom-sticky-header",
+		label: "Fandom Sticky Header",
+		selector: ".fandom-sticky-header",
+		category: "header",
+	},
+	{
+		id: "fandom-community-header-tag",
+		label: "Fandom Community Header (tag)",
+		selector: "header.fandom-community-header",
+		category: "header",
+	},
+	{
+		id: "fandom-community-header",
+		label: "Fandom Community Header",
+		selector: ".fandom-community-header",
+		category: "header",
+	},
+	{
+		id: "community-header-wrapper",
+		label: "Community Header Wrapper",
+		selector: ".community-header-wrapper",
+		category: "header",
+	},
+	{
+		id: "wds-global-navigation",
+		label: "WDS Global Navigation",
+		selector: ".wds-global-navigation",
+		category: "header",
+	},
+	{
+		id: "wds-global-navigation-content",
+		label: "WDS Global Navigation Content",
+		selector: ".wds-global-navigation__content",
+		category: "header",
+	},
+	{
+		id: "wds-global-navigation-links",
+		label: "WDS Global Navigation Links",
+		selector: ".wds-global-navigation__links",
+		category: "header",
+	},
+	{
+		id: "global-explore-navigation",
+		label: "Global Explore Navigation",
+		selector: "#global-explore-navigation",
+		category: "sidebar",
+	},
+	{
+		id: "page-left-rail",
+		label: "Page Left Rail",
+		selector: ".page__left-rail",
+		category: "sidebar",
+	},
+	{
+		id: "page-right-rail",
+		label: "Page Right Rail",
+		selector: ".page__right-rail",
+		category: "rail",
+	},
+	{
+		id: "page-rail",
+		label: "Page Rail",
+		selector: ".page__rail",
+		category: "rail",
+	},
+	{
+		id: "page-side-rail",
+		label: "Page Side Rail",
+		selector: ".page-side-rail",
+		category: "rail",
+	},
+	{
+		id: "rail-module",
+		label: "Rail Module",
+		selector: ".rail-module",
+		category: "rail",
+	},
+	{
+		id: "global-footer",
+		label: "Global Footer",
+		selector: ".global-footer",
+		category: "footer",
+	},
+	{
+		id: "global-footer-content",
+		label: "Global Footer Content",
+		selector: ".global-footer__content",
+		category: "footer",
+	},
+	{
+		id: "fandom-footer",
+		label: "Fandom Footer",
+		selector: "footer.fandom-footer",
+		category: "footer",
+	},
+	{
+		id: "page-footer",
+		label: "Page Footer",
+		selector: ".page-footer",
+		category: "footer",
+	},
+	{
+		id: "wikia-footer",
+		label: "Wikia Footer",
+		selector: ".WikiaFooter",
+		category: "footer",
+	},
+	{
+		id: "site-footer",
+		label: "Site Footer",
+		selector: ".site-footer",
+		category: "footer",
+	},
+];
 
-function removeIfPresent(element) {
-  if (element && element.remove) {
-    element.remove();
-  }
+const DEFAULT_SELECTORS = SELECTOR_CATALOG.reduce((acc, item) => {
+	acc[item.id] = true;
+	return acc;
+}, {});
+
+const DEFAULT_SETTINGS = {
+	enabled: false,
+	panoramic: false,
+	parts: DEFAULT_PARTS,
+	selectors: DEFAULT_SELECTORS,
+};
+
+const STYLE_ID = "fanblocker-style";
+const ROOT_ENABLED_CLASS = "fanblocker-enabled";
+const ROOT_PANORAMIC_CLASS = "fanblocker-panoramic";
+const api = typeof browser !== "undefined" ? browser : chrome;
+
+const panoramicSelectors = [
+	".page__main",
+	".main-container",
+	".resizable-container",
+	".page-content",
+	".page-content__inner",
+	"#content",
+];
+
+const storageGet = (keys) =>
+	new Promise((resolve) => api.storage.local.get(keys, resolve));
+
+let currentSettings = {
+	...DEFAULT_SETTINGS,
+	parts: { ...DEFAULT_PARTS },
+	selectors: { ...DEFAULT_SELECTORS },
+};
+
+function mergeSettings(base, update = {}) {
+	return {
+		enabled:
+			update.enabled !== undefined ? !!update.enabled : base.enabled,
+		panoramic:
+			update.panoramic !== undefined
+				? !!update.panoramic
+				: base.panoramic,
+		parts: { ...base.parts, ...(update.parts || {}) },
+		selectors: { ...base.selectors, ...(update.selectors || {}) },
+	};
 }
 
-function applyFanblocker() {
-  if (!isEnabled) {
-    return;
-  }
-
-  const fandomSidebar = document.getElementById(SELECTORS.sidebar);
-  const fandomHeader = document.getElementById(SELECTORS.header);
-  const fandomMainContent = document.querySelector(SELECTORS.mainContent);
-  const fandomMainBanner = document.querySelector(SELECTORS.banner);
-  const fandomRightRail = document.querySelector(SELECTORS.rightRail);
-  const fandomFooter = document.querySelectorAll(SELECTORS.footer);
-
-  removeIfPresent(fandomSidebar);
-  removeIfPresent(fandomHeader);
-  removeIfPresent(fandomRightRail);
-  fandomFooter.forEach((footer) => removeIfPresent(footer));
-
-  if (fandomMainContent) {
-    fandomMainContent.style.marginLeft = '0';
-    fandomMainContent.style.width = '100%';
-  }
-
-  if (fandomMainBanner) {
-    fandomMainBanner.style.transform = 'none';
-  }
+function getSelectorsByCategory(category, settings) {
+	return SELECTOR_CATALOG.filter(
+		(item) =>
+			item.category === category && settings.selectors[item.id] !== false
+	).map((item) => item.selector);
 }
 
-function setEnabledState(value) {
-  isEnabled = value !== false;
-  if (isEnabled) {
-    applyFanblocker();
-  }
+function ensureStyleElement() {
+	let style = document.getElementById(STYLE_ID);
+	if (!style) {
+		style = document.createElement("style");
+		style.id = STYLE_ID;
+		(document.head || document.documentElement).appendChild(style);
+	}
+	return style;
 }
 
-function getStoredEnabled() {
-  if (typeof browser === 'undefined' || !browser.storage || !browser.storage.local) {
-    return Promise.resolve(DEFAULT_ENABLED);
-  }
+function buildCss(settings) {
+	if (!settings.enabled) {
+		return "";
+	}
 
-  return browser.storage.local
-    .get({ enabled: DEFAULT_ENABLED })
-    .then((result) => result.enabled !== false)
-    .catch(() => DEFAULT_ENABLED);
+	const activeSelectors = [];
+	if (settings.parts.header) {
+		activeSelectors.push(...getSelectorsByCategory("header", settings));
+	}
+	if (settings.parts.sidebar) {
+		activeSelectors.push(...getSelectorsByCategory("sidebar", settings));
+	}
+	if (settings.parts.rail) {
+		activeSelectors.push(...getSelectorsByCategory("rail", settings));
+	}
+	if (settings.parts.footer) {
+		activeSelectors.push(...getSelectorsByCategory("footer", settings));
+	}
+
+	const baseRule = activeSelectors.length
+		? `html.${ROOT_ENABLED_CLASS} ${activeSelectors.join(
+				",\nhtml." + ROOT_ENABLED_CLASS + " "
+		  )} {\n  display: none !important;\n}`
+		: "";
+
+	const mainContainerRule = `\nhtml.${ROOT_ENABLED_CLASS} .main-container {\n  margin-left: 0 !important;\n  width: 100% !important;\n  max-width: 100% !important;\n}`;
+
+	if (!settings.panoramic) {
+		return baseRule + mainContainerRule;
+	}
+
+	const panoramicRule = `\nhtml.${ROOT_PANORAMIC_CLASS} ${panoramicSelectors.join(
+		",\nhtml." + ROOT_PANORAMIC_CLASS + " "
+	)} {\n  max-width: 100% !important;\n  width: 100% !important;\n  margin: 0 auto !important;\n}`;
+
+	return baseRule + mainContainerRule + panoramicRule;
 }
 
-function startFanblocker() {
-  if (hasStarted) {
-    return;
-  }
+function applySettings(settings) {
+	currentSettings = mergeSettings(currentSettings, settings);
+	const root = document.documentElement;
+	if (!root) {
+		return;
+	}
 
-  hasStarted = true;
+	if (currentSettings.enabled) {
+		root.classList.add(ROOT_ENABLED_CLASS);
+	} else {
+		root.classList.remove(ROOT_ENABLED_CLASS);
+	}
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyFanblocker);
-  } else {
-    applyFanblocker();
-  }
+	if (currentSettings.enabled && currentSettings.panoramic) {
+		root.classList.add(ROOT_PANORAMIC_CLASS);
+	} else {
+		root.classList.remove(ROOT_PANORAMIC_CLASS);
+	}
+
+	const style = ensureStyleElement();
+	const css = buildCss(currentSettings);
+	if (css) {
+		style.textContent = css;
+	} else if (style.parentNode) {
+		style.parentNode.removeChild(style);
+	}
 }
 
-function initFanblocker() {
-  getStoredEnabled().then((enabled) => {
-    setEnabledState(enabled);
-    startFanblocker();
-  });
+function listenForUpdates() {
+	if (api.runtime && api.runtime.onMessage) {
+		api.runtime.onMessage.addListener((message) => {
+			if (message && message.type === "fanblocker:update") {
+				applySettings(message.settings || {});
+			}
+		});
+	}
 
-  if (typeof browser !== 'undefined' && browser.storage && browser.storage.onChanged) {
-    browser.storage.onChanged.addListener((changes, areaName) => {
-      if (areaName === 'local' && changes.enabled) {
-        setEnabledState(changes.enabled.newValue);
-      }
-    });
-  }
+	if (api.storage && api.storage.onChanged) {
+		api.storage.onChanged.addListener((changes, area) => {
+			if (area !== "local") {
+				return;
+			}
+
+			if (
+				changes.enabled ||
+				changes.panoramic ||
+				changes.parts ||
+				changes.selectors
+			) {
+				applySettings({
+					enabled: changes.enabled
+						? !!changes.enabled.newValue
+						: currentSettings.enabled,
+					panoramic: changes.panoramic
+						? !!changes.panoramic.newValue
+						: currentSettings.panoramic,
+					parts: changes.parts
+						? changes.parts.newValue || {}
+						: currentSettings.parts,
+					selectors: changes.selectors
+						? changes.selectors.newValue || {}
+						: currentSettings.selectors,
+				});
+			}
+		});
+	}
 }
 
-initFanblocker();
-
-const observer = new MutationObserver(() => {
-  if (isEnabled) {
-    applyFanblocker();
-  }
-});
-
-if (document.documentElement) {
-  observer.observe(document.documentElement, { childList: true, subtree: true });
-}
-
-if (typeof browser !== 'undefined' && browser.runtime && browser.runtime.onMessage) {
-  browser.runtime.onMessage.addListener((message) => {
-    if (!message) {
-      return;
-    }
-
-    if (message.type === 'fanblocker-reinject') {
-      applyFanblocker();
-      return;
-    }
-
-    if (message.type === 'fanblocker-set-enabled') {
-      setEnabledState(message.enabled);
-    }
-  });
-}
+storageGet(["enabled", "panoramic", "parts", "selectors"]).then(
+	(stored) => {
+		applySettings(
+			mergeSettings(currentSettings, {
+				enabled: stored.enabled,
+				panoramic: stored.panoramic,
+				parts: stored.parts,
+				selectors: stored.selectors,
+			})
+		);
+		listenForUpdates();
+	}
+);

@@ -1,34 +1,45 @@
 {
-    "manifest_version": 2,
-    "name": "Fanblocker - Fandom Disruptions Blocker",
-    "version": "0.1.1",
-    "description": "Get rid of the annoying Fandom disruptions.",
-    "icons": {
-        "48": "icon48.png",
-        "96": "icon96.png",
-        "128": "icon128.png"
+  "manifest_version": 2,
+  
+  "name": "Fanblocker - Block annoying features on Fandom wikis",
+  "description": "Fanblocker is an open-source fan-made extension for Firefox that removes the header, sidebar, and side rail of a Fandom Wiki page in real time, providing a smooth reading experience without the previous distractions that annoy many users to this date.",
+  
+  "version": "0.1.5",
+    
+  "icons": {
+    "48": "./assets/icons/icon48.png",
+    "96": "./assets/icons/icon96.png"
+  },
+  
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  
+  "browser_action": {
+    "default_icon": {
+      "48": "./assets/icons/icon48.png",
+      "96": "./assets/icons/icon96.png"
     },
+    "default_title": "Fanblocker",
+    "default_popup": "./interface/interface.html"
+  },
 
-    "permissions": ["activeTab", "storage"],
+  "options_ui": {
+    "page": "./interface/options.html",
+    "open_in_tab": true
+  },
 
-    "browser_specific_settings": {
-        "gecko": {
-            "data_collection_permissions": {
-                "required": ["none"]
-            }
-        }
-    },
-
-    "browser_action": {
-        "default_icon": "icon48.png",
-        "default_title": "Fanblocker",
-        "default_popup": "popup/popup.html"
-    },
-
-    "content_scripts": [
-        {
-            "matches": ["*://*.fandom.com/*"],
-            "js": ["content.js"]
-        }
-    ]
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.fandom.com/*",
+        "*://fandom.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
 }
